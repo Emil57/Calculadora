@@ -1,11 +1,6 @@
-from ctypes import sizeof
-from glob import glob
 from tkinter import *
 import tkinter as tk 
 from tkinter import ttk # ANOTHER BUTTON STYLE 
-from webbrowser import get
-
-from setuptools import Command
 
 # raiz 
 raiz = tk.Tk()
@@ -19,14 +14,13 @@ entry.place(x=5,y=8)
 entry.config(width=21)
 
 op = 0
-a = 0.0
 b = 0.0
-c = 0.0
-var = ''
-
 def beforeTo(op):
-    a = entry.get()
-    print('a = ' +a)
+    global var
+    global a
+    #a = float(entry.get())
+    #print('a = ' + str(a))
+    a = float(entry.get())
     entry.delete(0,END)
     sw = {
         1:'+',
@@ -35,23 +29,26 @@ def beforeTo(op):
         4:'/',
     }
     var = sw.get(op,'no')
-    print('op = '+ str(var))
+    #print('op = '+ str(var))
 
 def result():
-    b = entry.get()
-    print('b = ' +b)
-    if op == 1:
-        print('Entro al 1')
-        entry.insert(0,a+b)
-    elif op == 2:
-        print('Entro al 2')
-    elif op == 3:
-        print('Entro al 3')
-    elif op == 4:
-        print('Entro al 4')
-    else:
-        print('No entro')
+    b = float(entry.get())
+    #print('b = ' +str(b))
     entry.delete(0,END)
+    if var == '+':
+        #print('Entro al 1')
+        entry.insert(0,str(a+b))
+    elif var == '-':
+        #print('Entro al 2')
+        entry.insert(0,str(a-b))
+    elif var == 'x':
+        #print('Entro al 3')
+        entry.insert(0,str(a*b))
+    elif var == '/':
+        #print('Entro al 4')
+        entry.insert(0, str(a/b))
+    else:
+        print('Error')
 
 # Buttons
 exit_button = tk.Button(raiz, text='OFF', width=4, command=lambda:raiz.quit())
@@ -84,7 +81,7 @@ times_button = tk.Button(raiz, text='x', width=4, command=lambda:beforeTo(3))
 times_button.place(x=140,y=95)
 div_button = tk.Button(raiz, text='/', width=4, command=lambda:beforeTo(4))
 div_button.place(x=140,y=125)
-result_button = tk.Button(raiz, text='=', width=4, command=lambda:result(op))
+result_button = tk.Button(raiz, text='=', width=4, command=lambda:result())
 result_button.place(x=95,y=125)
 del_button = tk.Button(raiz, text='Del',command=lambda:entry.delete(len(entry.get())-1,END),width=4)
 del_button.place(x=140,y=4)
